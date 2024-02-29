@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-configuration PUBLIC
+
+
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+
+
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <!--hibernate.cfg.xml-->
+    <session-factory>
+
+        <!--projenizin hangi veritabanı sürücüsünü (Driver) kullanacağını belirtir.
+        Veritabanı sürücüsü, Java uygulamanızın veritabanı ile iletişim kurmasını sağlar.
+        Burda postgresql kullancağımızı belirtiyoruz.-->
+        <property name = "hibernate.connection.driver_class">org.postgresql.Driver</property>
+
+        <!--postgresl connection ayarları-->
+        <property name="connection.url">jdbc:postgresql://localhost:5432/hibernate_db</property>
+
+
+        <!--postgresql kullanıcısını seçiyoruz.-->
+        <property name="connection.username">db_user1</property>
+
+
+        <!--postgresql şifre-->
+        <property name="connection.password">db_user1</property>
+
+        <!-- Belirtilen DB icin SQL sorgularinin Hibernate tarafindan olusturulmasini sagliyor -->
+        <!-- burada Driver : Java ise Dialect JDK versiyonu oluyor.Bir nevi lehçe
+        //hipernate javadan aldığı verileri postgresql diline çevirip datbase gönderecek -->
+        <property name = "hibernate.dialect">org.hibernate.dialect.PostgreSQL9Dialect</property>
+
+        <!-- ddl.auto create ise uygulama her çalıştırıldığında schema yeniden oluşturulur.
+             update: tablolar silinmez değişiklik var ise güncellenir.
+             create : Mevcut veritabanını tamamen siler ve Hibernate tarafından tanımlanan tabloları oluşturur.
+               Bu seçenek, her seferinde veritabanını yeniden oluşturur, bu nedenle mevcut veriler kaybolur.
+               Genellikle test veya geliştirme aşamasında kullanılır.
+             create-drop: Bu seçenek, uygulama başladığında veritabanını oluşturur ve uygulama sonlandığında
+               veritabanını tamamen siler.
+             validate: tablolari validate yapıyor. eksiklik varsa hata olusturur
+         -->
+
+
+        <!-- (update )enti ti de bişey değiştirirsem güncelle demek-->
+        <!--<property name="hbm2ddl.auto">update</property
+        yani tablo yok ise oluşturur. sonrasında tabloyu silmeden sorguları çalıştırır.
+        Her sorguda datbase i silip tekrar oluşturmaz. -->
+        <!--(create)önce tabloyu kaldırıır.sonra sıfırdan oluştururur.snra sorguyu gönderir.-->
+        <property name="hbm2ddl.auto">update</property>
+
+
+        <!--hipernate in oluşturduğu sorguları lamka istiyorsak true diyeceğiz.-->
+        <property name="show_sql">true</property>
+        <!--sql sorgusunun  düzenli yazılması şekli güzel-->
+        <property name="format_sql">true</property>
+
+
+        <!--Second Level Cache >> geçiş yapmak için 2 adet maven ekledik. ve buraya da ekleme yaptık.-->
+        <!--2nd Level Cache ve Query Cache aktif hale getirildi  -->
+        <property name="hibernate.cache.use_second_level_cache">true</property>
+        <property name="hibernate.cache.use_query_cache">true</property>
+        <!-- pom'a eklenen ehcache ve jcache kutuphanelerimi konfigurasyona dahil ettim  -->
+        <property name="hibernate.cache.region.factory_class">org.hibernate.cache.jcache.internal.JCacheRegionFactory</property>
+        <property name="hibernate.javax.cache.provider">org.ehcache.jsr107.EhcacheCachingProvider</property>
+
+    </session-factory>
+
+</hibernate-configuration>
