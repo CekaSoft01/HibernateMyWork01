@@ -33,19 +33,19 @@ public class RunnerFetch {
       //  resulList1.forEach(r -> System.out.println(Arrays.toString(r)));
 
 
-        //* bütün öğrenciler ve varsa bu ogrencilerin gunlukleri da getirelim
+        //* bütün öğrenciler ve varsa bu ogrencilerin gunlukleri
         String hqlQuery2="select s.name,d.name from Student s left join fetch Diary d on s.id=d.student";
         List<Object[]> resulList2=session.createQuery(hqlQuery2).getResultList();
         resulList1.forEach(r -> System.out.println(Arrays.toString(r)));
 
-        //Task : Bütün günlükler ve varsa günlüğü olan Öğrenciler geliyor
+        //: Bütün günlükler ve varsa günlüğü olan Öğrenciler geliyor
         String hqlQuery3 = "SELECT s.name,d.name FROM Student s RIGHT JOIN FETCH Diary d ON s.id=d.student";
         List<Object[]> resultList3 = session.createQuery(hqlQuery3).getResultList();
         resultList3.forEach(oa-> {
             System.out.println(Arrays.toString(oa));
         });
 
-        //Not:  TASK : butun ogrenci ve diary bilgilerini getiriyoruz
+        //: butun ogrenci ve diary bilgilerini getiriyoruz
         String hqlQuery4 = "SELECT s.name,d.name FROM Student s FULL JOIN FETCH Diary d ON s.id=d.student";
         List<Object[]> resultList4 = session.createQuery(hqlQuery4).getResultList();
         resultList4.forEach(oa-> {
